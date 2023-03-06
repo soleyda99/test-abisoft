@@ -1,0 +1,127 @@
+<div
+  class="modal fade"
+  id="modal"
+  #modal
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ title }} Usuario</h5>
+      </div>
+      <div class="modal-body">
+        <form
+          class="row g-3 needs-validation"
+          [formGroup]="userForm"
+          (ngSubmit)="submit()"
+        >
+          <div class="col-md-6">
+            <label for="validationCustom01" class="form-label">Nombre</label>
+
+            <input
+              type="text"
+              class="form-control"
+              id="nombre"
+              formControlName="nombre"
+            />
+            <div *ngIf="nombre?.invalid && (nombre?.dirty || nombre?.touched)">
+              <small *ngIf="nombre?.errors?.['required']" class="text-danger">
+                Este campo es requerido
+              </small>
+              <small *ngIf="nombre?.errors?.['minlength']" class="text-danger">
+                Minimo 4 caracteres
+              </small>
+              <small *ngIf="nombre?.errors?.['maxlength']" class="text-danger">
+                Maximo 4 caracteres
+              </small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="validationCustom01" class="form-label">Apellido</label>
+            <input
+              type="text"
+              class="form-control"
+              id="apellido"
+              formControlName="apellido"
+            />
+            <div
+              *ngIf="
+                apellido?.invalid && (apellido?.dirty || apellido?.touched)
+              "
+            >
+              <small *ngIf="apellido?.errors?.['required']" class="text-danger">
+                Este campo es requerido
+              </small>
+              <small
+                *ngIf="apellido?.errors?.['minlength']"
+                class="text-danger"
+              >
+                Minimo 4 caracteres
+              </small>
+              <small
+                *ngIf="apellido?.errors?.['maxlength']"
+                class="text-danger"
+              >
+                Maximo 4 caracteres
+              </small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="validationCustom02" class="form-label"
+              >Fecha de nacimiento</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="fechaNacimiento"
+              formControlName="fechaNacimiento"
+              (change)="calcularEdad()"
+            />
+            <small *ngIf="!isMayorEdad" class="text-danger">
+              Eres menor de edad
+            </small>
+          </div>
+          <div class="col-md-6">
+            <label for="validationCustom02" class="form-label"
+              >Fecha de inscripcion</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="fechaInscripcion"
+              formControlName="fechaInscripcion"
+              (change)="calcularCosto()"
+            />
+            <small *ngIf="!isInscripcionMayor" class="text-danger">
+              La fecha de inscripcion debe ser mayor
+            </small>
+          </div>
+
+          <div class="modal-footer mt-5">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="closeModal()"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="
+                userForm.invalid || !isInscripcionMayor || !isMayorEdad
+              "
+            >
+              {{ title == "Crear" ? "Guardar" : "Actualizar" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

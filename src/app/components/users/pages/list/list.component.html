@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <button
+    class="btn btn-outline-primary"
+    type="button"
+    (click)="openModal('Crear')"
+  >
+    Crear Usuario
+  </button>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nombre completo</th>
+        <th scope="col">Edad</th>
+        <th scope="col">Fecha de nacimiento</th>
+        <th scope="col">Fecha de inscripcion</th>
+        <th scope="col">Costo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <th>{{ user.nombre }} {{ user.apellido }}</th>
+        <td>{{ user.edad }}</td>
+        <td>{{ user.fechaNacimiento | date : "dd/MM/yyyy" : "UTC" }}</td>
+        <td>{{ user.fechaInscripcion | date : "dd/MM/yyyy" : "UTC" }}</td>
+        <td>{{ user.costo }} $</td>
+        <td (click)="openModal('Actualizar', user)">
+          <i class="fa-solid fa-pencil" style="cursor: pointer"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-modal
+  [title]="title"
+  (save)="guardar($event)"
+  (update)="actualizar($event)"
+></app-modal>
